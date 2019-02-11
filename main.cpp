@@ -9,8 +9,6 @@
 int main()
 {
     std::vector<Human> people;
-    auto it_b = people.begin();
-    auto it_e = people.end();
 
     Student A("Adam", "Adamowski", "99011012345", "male", "Wroclaw", "123");
     Employee V("Wiktotia", "Kowalska", "78060614785", "female", "Brzeg", 1500);
@@ -34,10 +32,10 @@ int main()
     people.emplace_back(E);
     people.emplace_back(Z);
 
-    auto it_del = std::find(it_b, it_e, people.get_no_of_grade_book());
+    auto it_del = std::find(people.begin(), people.end(), people.get_no_of_grade_book());
     people.erase(it_del);
 
-    people.erase(std::find(it_b, it_e, people.get_no_of_grade_book()));
+    people.erase(std::find(people.begin(), people.end(), people.get_no_of_grade_book()));
 
     return 0;
 }
