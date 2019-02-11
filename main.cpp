@@ -34,10 +34,10 @@ int main()
     people.emplace_back(E);
     people.emplace_back(Z);
 
-    auto it_del = std::find(it_b, it_e, "123");
+    auto it_del = std::find(it_b, it_e, people.get_no_of_grade_book());
     people.erase(it_del);
 
-    people.erase(std::find(it_b, it_e, "123"));
+    people.erase(std::find(it_b, it_e, people.get_no_of_grade_book()));
 
     return 0;
 }
