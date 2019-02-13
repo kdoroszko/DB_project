@@ -21,32 +21,21 @@ int main()
     Student E("Emil", "Ekierka", "99032412379", "male", "Wroclaw", "536");
     Employee Z("Zbigniew", "Ząbek", "49120112445", "male", "Wrocław", 1000);
 
-    Student *ptr_A = &A;
-    Employee *ptr_V = &V;
-    Student *ptr_B = &B;
-    Employee *ptr_W = &W;
-    Student *ptr_C = &C;
-    Employee *ptr_X = &X;
-    Student *ptr_D = &D;
-    Employee *ptr_Y = &Y;
-    Student *ptr_E = &E;
-    Employee *ptr_Z = &Z;
+    database.add_to_base(&A);
+    database.add_to_base(&V);
+    database.add_to_base(&B);
+    database.add_to_base(&W);
+    database.add_to_base(&C);
+    database.add_to_base(&X);
+    database.add_to_base(&D);
+    database.add_to_base(&Y);
+    database.add_to_base(&E);
+    database.add_to_base(&Z);
 
-    database.add_to_base(ptr_A);
-    database.add_to_base(ptr_V);
-    database.add_to_base(ptr_B);
-    database.add_to_base(ptr_W);
-    database.add_to_base(ptr_C);
-    database.add_to_base(ptr_X);
-    database.add_to_base(ptr_D);
-    database.add_to_base(ptr_Y);
-    database.add_to_base(ptr_E);
-    database.add_to_base(ptr_Z);
+    database.delete_student_from_base("789");
 
-    /*auto it_del = std::find(people.begin(), people.end(), people.get_no_of_grade_book());
-    people.erase(it_del);
-
-    people.erase(std::find(people.begin(), people.end(), people.get_no_of_grade_book()));*/
+    auto it_find_by_surname = database.find_by_surname("Drewniak");
+    auto it_find_by_PESEL = database.find_by_PESEL("99032412379");
 
     return 0;
 }
