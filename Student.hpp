@@ -4,6 +4,7 @@
 #include "Human.hpp"
 
 #include <string>
+#include <iostream>
 
 
 class Student : public Human
@@ -21,5 +22,7 @@ private:
     std::string no_of_grade_book;
 
 };
+
+std::ostream& operator << (std::ostream &os, const Student &s);
 
 #endif // STUDENT_HPP

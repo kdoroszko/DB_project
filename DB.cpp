@@ -1,6 +1,4 @@
 #include "DB.hpp"
-#include <algorithm>
-#include <cassert>
 
 void DB::add_to_base(Human *new_human)
 {
@@ -14,9 +12,9 @@ void DB::delete_student_from_base(std::string no_of_grade_book)
         return human->get_no_of_grade_book() == no_of_grade_book;
     });
 
-    assert(it != people.end());
-
-    people.erase(it);
+    if(it == people.end())
+        std::cout << "W bazie nie ma studenta o nr indeksu: " << no_of_grade_book << "!\n";
+    else people.erase(it);
 }
 
 std::vector<Human*>::iterator DB::find_by_surname(std::string surname)
@@ -33,4 +31,9 @@ std::vector<Human*>::iterator DB::find_by_PESEL(std::string PESEL)
     {
         return human->get_PESEL() == PESEL;
     });
+}
+
+void DB::print()
+{
+    std::for_each(people.begin(), people.end(), [](Human* human){std::cout << *human << '\n';});
 }
