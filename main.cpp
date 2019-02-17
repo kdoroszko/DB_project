@@ -12,7 +12,7 @@ int main()
     DB database;
 
     Student A("Adam", "Adamowski", "99011012345", "mezczyzna", "Wroclaw", "123");
-    Employee V("Wiktotia", "Kowalska", "78060614785", "kobieta", "Brzeg", 1500);
+    Employee V("Wiktoria", "Kowalska", "78060614785", "kobieta", "Brzeg", 1500);
     Student B("Bartosz", "Byk", "94041712585", "mezczyzna", "Opole", "456");
     Employee W("Wanda", "Wol", "56082917485", "kobieta", "Dlugoleka", 2500);
     Student C("Celina", "Czajka", "97100812456", "kobieta", "Sroda Slaska", "789");
@@ -39,6 +39,27 @@ int main()
     auto it_find_by_surname = database.find_by_surname("Drewniak");
     auto it_find_by_PESEL = database.find_by_PESEL("99032412379");
 
+    database.print();
+
+    std::cout << '\n';
+    database.sort_by_grade_book();
+    database.print();
+
+    std::cout << '\n';
+    database.sort_by_PESEL();
+    database.print();
+
+    std::cout << '\n';
+    database.sort_by_surname();
+    database.print();
+
+    std::cout << '\n';
+    database.delete_human_by_PESEL("56082917485");
+    database.delete_human_by_PESEL("AAA");
+    database.print();
+
+    std::cout << '\n';
+    database.change_address_by_PESEL("76022812311", "NOWY ADRES");
     database.print();
 
     return 0;
