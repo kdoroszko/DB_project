@@ -25,6 +25,4 @@ private:
     double salary;
 };
 
-std::ostream& operator << (std::ostream &os, const Employee &e);
-
 #endif // EMPLOYEE_HPP

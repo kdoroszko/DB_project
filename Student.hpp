@@ -24,6 +24,4 @@ private:
 
 };
 
-std::ostream& operator << (std::ostream &os, const Student &s);
-
 #endif // STUDENT_HPP

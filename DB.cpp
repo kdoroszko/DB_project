@@ -19,10 +19,7 @@ void DB::delete_student_from_base(std::string no_of_grade_book)
 
 void DB::delete_human_by_PESEL(std::string PESEL)
 {
-    auto it = std::find_if(people.begin(), people.end(), [PESEL](Human* human)
-    {
-        return human->get_PESEL() == PESEL;
-    });
+    auto it = find_by_PESEL(PESEL);
 
     if(it == people.end())
         std::cout << "W bazie nie ma czlowieka o podanym nr PESEL: " << PESEL << "!\n";
@@ -52,34 +49,22 @@ void DB::print() const
 
 void DB::sort_by_grade_book()
 {
-    for(int i = 0; i < people.size() - 1; i++)
-        for(int j = 0; j < people.size() - 1; j++)
-            if((people.at(j))->get_no_of_grade_book() > (people.at(j + 1))->get_no_of_grade_book())
-                std::swap(people.at(j), people.at(j + 1));
+    std::sort(people.begin(), people.end(), [](Human *a, Human *b){return a->get_no_of_grade_book() < b->get_no_of_grade_book();});
 }
 
 void DB::sort_by_PESEL()
 {
-    for(int i = 0; i < people.size() - 1; i++)
-        for(int j = 0; j < people.size() - 1; j++)
-            if((people.at(j))->get_PESEL() > (people.at(j + 1))->get_PESEL())
-                std::swap(people.at(j), people.at(j + 1));
+    std::sort(people.begin(), people.end(), [](Human *a, Human *b){return a->get_PESEL() < b->get_PESEL();});
 }
 
 void DB::sort_by_surname()
 {
-    for(int i = 0; i < people.size() - 1; i++)
-        for(int j = 0; j < people.size() - 1; j++)
-            if((people.at(j))->get_surname() > (people.at(j + 1))->get_surname())
-                std::swap(people.at(j), people.at(j + 1));
+    std::sort(people.begin(), people.end(), [](Human *a, Human *b){return a->get_surname() < b->get_surname();});
 }
 
 void DB::change_address_by_PESEL(std::string PESEL, std::string new_address)
 {
-    auto it = std::find_if(people.begin(), people.end(), [PESEL](Human* human)
-    {
-        return human->get_PESEL() == PESEL;
-    });
+    auto it = find_by_PESEL(PESEL);
 
     if(it == people.end())
         std::cout << "W bazie nie ma czlowieka o podanym nr PESEL: " << PESEL << "!\n";
