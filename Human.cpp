@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "Human.hpp"
 
-/*Human::Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
-: name(new_name), surname(new_surname), sex(new_sex), address(new_address)
+Human::Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
+: name(new_name), surname(new_surname), PESEL(new_PESEL), sex(new_sex), address(new_address)
 {
-    PESEL = new_PESEL;
-}*/
+    if (!correct_PESEL(new_PESEL))
+            throw std::logic_error("Invalid PESEL");
+}
 
 std::string Human::print() const
 {

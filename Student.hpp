@@ -14,6 +14,7 @@ public:
 
     std::string print() const;
     std::string get_no_of_grade_book() const;
+    virtual double get_salary() const;
 
 private:
 

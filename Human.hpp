@@ -5,31 +5,17 @@
 #include <array>
 #include <algorithm>
 #include <cstdlib>
+#include <stdexcept>
 
 class Human
 {
 
 public:
     
-    Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
-    : name(new_name), surname(new_surname), sex(new_sex), address(new_address)
-    {
-        try
-        {
-            PESEL = new_PESEL;
-
-            if (!correct_PESEL(new_PESEL))
-                throw 1;
-        }
-
-        catch (int message)
-        {
-            std::cout << "\nWprowadzony nr PESEL dla " << surname << "jest nieprawidlowy\n";
-            std::exit(message);
-        }
-    }
+    Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address);
 
     virtual std::string get_no_of_grade_book() const = 0;
+    virtual double get_salary() const = 0;
     virtual std::string print() const;
     bool correct_PESEL(std::string new_PESEL) const;
     std::string get_name() const;

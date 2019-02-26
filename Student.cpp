@@ -10,3 +10,8 @@ std::string Student::get_no_of_grade_book() const
 {
     return no_of_grade_book;
 }
+
+double Student::get_salary() const
+{
+    return 0;
+}
