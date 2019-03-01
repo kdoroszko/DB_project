@@ -6,6 +6,11 @@ double Employee::get_salary() const
     return salary;
 }
 
+void Employee::set_salary(double new_salary)
+{
+    salary = new_salary;
+}
+
 std::string Employee::print() const
 {
     std::stringstream temp_salary;

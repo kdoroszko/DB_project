@@ -12,8 +12,8 @@ int main()
 {
     DB database;
     
-    try
-    {
+    //try
+    //{
         Student A("Adam", "Adamowski", "99011012344", "mezczyzna", "Wroclaw", "123");
         Employee V("Wiktoria", "Kowalska", "78060614585", "kobieta", "Brzeg", 1500);
         Student B("Bartosz", "Byk", "94041712587", "mezczyzna", "Opole", "456");
@@ -36,13 +36,13 @@ int main()
         database.add_to_base(&Y);
         database.add_to_base(&E);
         database.add_to_base(&Z);
-    }
+    //}
 
-    catch (std::logic_error message)
+    /*catch (std::logic_error message)
     {
         std::cout << "\nWprowadzony nr PESEL jest nieprawidlowy\n";
         std::exit(1);
-    }
+    }*/
 
     database.delete_student_from_base("789");
     database.delete_student_from_base("789111");
@@ -72,6 +72,23 @@ int main()
     std::cout << '\n';
     database.change_address_by_PESEL("76022812311", "NOWY ADRES");
     database.print();
+
+    std::cout << '\n';
+    database.sort_by_salary();
+    database.print();
+
+    std::cout << '\n';
+    database.change_salary_by_PESEL("111", 1000);
+    database.change_salary_by_PESEL("99011012344", 1000);
+    std::cout << '\n';
+    database.change_salary_by_PESEL("76022812310", 6000);
+    database.print();
+
+    std::cout << '\n';
+    database.save("Zapis_bazy.txt");
+    database.delete_student_from_base("123");
+    database.load("Zapis_bazy.txt");
+    //database.print();
 
     return 0;
 }

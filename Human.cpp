@@ -4,8 +4,8 @@
 Human::Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
 : name(new_name), surname(new_surname), PESEL(new_PESEL), sex(new_sex), address(new_address)
 {
-    if (!correct_PESEL(new_PESEL))
-            throw std::logic_error("Invalid PESEL");
+    //if (!correct_PESEL(new_PESEL))
+            //throw std::logic_error("Invalid PESEL");
 }
 
 std::string Human::print() const
@@ -54,6 +54,16 @@ std::string Human::get_surname() const
 std::string Human::get_PESEL() const
 {
     return PESEL;
+}
+
+std::string Human::get_sex() const
+{
+    return sex;
+}
+
+std::string Human::get_address() const
+{
+    return address;
 }
 
 void Human::set_address(std::string new_address)

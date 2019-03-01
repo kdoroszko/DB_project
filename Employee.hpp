@@ -14,6 +14,7 @@ public:
     : Human(new_name, new_surname, new_PESEL, new_sex, new_address), salary(new_salary) {}
 
     double get_salary() const;
+    void set_salary(double new_salary);
     std::string print() const;
     virtual std::string get_no_of_grade_book() const;
 

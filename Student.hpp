@@ -15,6 +15,7 @@ public:
     std::string print() const;
     std::string get_no_of_grade_book() const;
     virtual double get_salary() const;
+    virtual void set_salary(double new_salary) {/*Student nie ma pensji*/}
 
 private:
 
