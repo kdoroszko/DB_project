@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "DB.hpp"
 
-void DB::add_to_base(Human *new_human)
+void DB::add_to_base(std::shared_ptr<Human> new_human)
 {
     people.emplace_back(new_human);
 }
 
 void DB::delete_student_from_base(std::string no_of_grade_book)
 {
-    auto it = std::find_if(people.begin(), people.end(), [no_of_grade_book](Human* human)
+    auto it = std::find_if(people.begin(), people.end(), [no_of_grade_book](std::shared_ptr<Human> human)
     {
         return human->get_no_of_grade_book() == no_of_grade_book;
     });
@@ -27,17 +27,24 @@ void DB::delete_human_by_PESEL(std::string PESEL)
     else people.erase(it);
 }
 
-std::vector<Human*>::iterator DB::find_by_surname(std::string surname)
+void DB::find_by_surname(std::string find_surname)
 {
-    return std::find_if(people.begin(), people.end(), [surname](Human* human)
+    std::cout << "\nW bazie znajduja sie nastepujace osoby o podanym nazwisku: " << find_surname << '\n';
+
+    for (auto element : people)
     {
-        return human->get_surname() == surname;
-    });
+        if (element->get_surname() == find_surname)
+        {
+            //element->print(); // nie dziala :/
+            //element->Human::print(); // nie dziala :/
+            std::cout << element->get_name() << " " << element->get_surname() << " o nr PESEL: " << element->get_PESEL() << '\n';
+        }
+    }
 }
 
-std::vector<Human*>::iterator DB::find_by_PESEL(std::string PESEL)
+std::vector<std::shared_ptr<Human>>::iterator DB::find_by_PESEL(std::string PESEL)
 {
-    return std::find_if(people.begin(), people.end(), [PESEL](Human* human)
+    return std::find_if(people.begin(), people.end(), [PESEL](std::shared_ptr<Human> human)
     {
         return human->get_PESEL() == PESEL;
     });
@@ -45,27 +52,27 @@ std::vector<Human*>::iterator DB::find_by_PESEL(std::string PESEL)
 
 void DB::print() const
 {
-    std::for_each(people.begin(), people.end(), [](Human* human) {std::cout << human->print() << '\n'; });
+    std::for_each(people.begin(), people.end(), [](std::shared_ptr<Human> human) {std::cout << human->print() << '\n'; });
 }
 
 void DB::sort_by_grade_book()
 {
-    std::sort(people.begin(), people.end(), [](Human *a, Human *b) {return a->get_no_of_grade_book() < b->get_no_of_grade_book(); });
+    std::sort(people.begin(), people.end(), [](std::shared_ptr<Human> a, std::shared_ptr<Human> b) {return a->get_no_of_grade_book() < b->get_no_of_grade_book(); });
 }
 
 void DB::sort_by_PESEL()
 {
-    std::sort(people.begin(), people.end(), [](Human *a, Human *b) {return a->get_PESEL() < b->get_PESEL(); });
+    std::sort(people.begin(), people.end(), [](std::shared_ptr<Human> a, std::shared_ptr<Human> b) {return a->get_PESEL() < b->get_PESEL(); });
 }
 
 void DB::sort_by_surname()
 {
-    std::sort(people.begin(), people.end(), [](Human *a, Human *b) {return a->get_surname() < b->get_surname(); });
+    std::sort(people.begin(), people.end(), [](std::shared_ptr<Human> a, std::shared_ptr<Human> b) {return a->get_surname() < b->get_surname(); });
 }
 
 void DB::sort_by_salary()
 {
-    std::sort(people.begin(), people.end(), [](Human *a, Human *b) {return a->get_salary() < b->get_salary(); });
+    std::sort(people.begin(), people.end(), [](std::shared_ptr<Human> a, std::shared_ptr<Human> b) {return a->get_salary() < b->get_salary(); });
 }
 
 void DB::change_address_by_PESEL(std::string PESEL, std::string new_address)
@@ -83,7 +90,7 @@ void DB::change_salary_by_PESEL(std::string PESEL, double new_salary)
 
     if (it == people.end())
         std::cout << "W bazie nie ma czlowieka o podanym nr PESEL: " << PESEL << "!\n";
-    else if (((*it)->get_salary()) == 0)
+    else if (static_cast<int>(((*it)->get_salary())) == 0)
             std::cout << "Osoba o nr PESEL " << PESEL << " jest studentem i nie mozna jej ustawic pensji!\n";
         else (*it)->set_salary(new_salary);
 }
@@ -117,7 +124,7 @@ void DB::load(std::string file_name)
     people.clear();
 
     std::string load_data;
-    int line_no = 1, human_no = 0;
+    int line_no = 1;
 
     while (getline(DB_load_file, load_data))
     {
@@ -147,19 +154,47 @@ void DB::load(std::string file_name)
             convert << load_data;
             convert >> temp_salary;
 
-            if (temp_salary == 0)
+            if (static_cast<int>(temp_salary) == 0)
             {
-                std::unique_ptr<Student> ptr_temp_student(new Student(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_no_of_grade_book));
-                people.emplace_back(ptr_temp_student.get());
+                std::shared_ptr<Human> temp_ptr;
+                temp_ptr.reset(new Student(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_no_of_grade_book));
+                people.emplace_back(temp_ptr);
             }
             else {
-                std::unique_ptr<Employee> ptr_temp_employee(new Employee(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_salary));
-                people.emplace_back(ptr_temp_employee.get());
+                std::shared_ptr<Human> temp_ptr;
+                temp_ptr.reset(new Employee(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_salary));
+                people.emplace_back(temp_ptr);
             }
         }
 
         if (line_no == 7)
             line_no = 1;
         else line_no++;
+    }
+}
+
+void DB::generate_data()
+{
+    std::string seed_random = std::to_string(time(nullptr));
+    std::random_device rd(seed_random);
+    std::mt19937 g(rd());
+    std::shuffle(rand_name.begin(), rand_name.end(), g);
+    std::shuffle(rand_surname.begin(), rand_surname.end(), g);
+    std::shuffle(rand_PESEL.begin(), rand_PESEL.end(), g);
+    std::shuffle(rand_sex.begin(), rand_sex.end(), g); //trzeba by zrobic rozroznienie imion ze wzgledu na plec, no chyba ze Mariusz moze byc kobieta ;)
+    std::shuffle(rand_address.begin(), rand_address.end(), g);
+
+    if (*rand_sex.begin() == "kobieta")
+    {
+        std::shuffle(rand_no_of_grade_book.begin(), rand_no_of_grade_book.end(), g);
+        std::shared_ptr<Human> rand_ptr;
+        rand_ptr.reset(new Student(*rand_name.begin(), *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_no_of_grade_book.begin()));
+        people.emplace_back(rand_ptr);
+    }
+    else {
+        std::shuffle(rand_salary.begin(), rand_salary.end(), g);
+        std::shared_ptr<Human> rand_ptr;
+        rand_ptr.reset(new Employee(*rand_name.begin(), *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_salary.begin()));
+        people.emplace_back(rand_ptr);
     }
 }

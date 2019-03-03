@@ -4,8 +4,8 @@
 Human::Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
 : name(new_name), surname(new_surname), PESEL(new_PESEL), sex(new_sex), address(new_address)
 {
-    //if (!correct_PESEL(new_PESEL))
-            //throw std::logic_error("Invalid PESEL");
+    if (!correct_PESEL(new_PESEL))
+            throw std::logic_error("Invalid PESEL");
 }
 
 std::string Human::print() const
@@ -15,9 +15,9 @@ std::string Human::print() const
 
 bool Human::correct_PESEL(std::string new_PESEL) const
 {
-    int check_PESEL = std::stoi(new_PESEL);
-    std::array<int, 11> compute;
-    const int system = 10;
+    long long check_PESEL = std::stoll(new_PESEL);
+    std::array<long long, 11> compute;
+    const long long system = 10;
     /*auto it = compute.rbegin();
 
     std::generate(compute.rbegin(), compute.rend(), [&compute, &check_PESEL, &it]()
@@ -33,7 +33,7 @@ bool Human::correct_PESEL(std::string new_PESEL) const
         check_PESEL /= system;
     }
 
-    int addition_control = compute.at(0) + 3 * compute.at(1) + 7 * compute.at(2) + 9 * compute.at(3) + compute.at(4) + 3 * compute.at(5) + 7 * compute.at(6)
+    long long addition_control = compute.at(0) + 3 * compute.at(1) + 7 * compute.at(2) + 9 * compute.at(3) + compute.at(4) + 3 * compute.at(5) + 7 * compute.at(6)
         + 9 * compute.at(7) + compute.at(8) + 3 * compute.at(9) + compute.at(10);
 
     if (addition_control % system == 0)
