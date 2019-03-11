@@ -22,7 +22,7 @@ public:
     void delete_human_by_PESEL(std::string PESEL);
     void find_by_surname(std::string find_surname);
     std::vector<std::shared_ptr<Human>>::iterator find_by_PESEL(std::string PESEL);
-    void print() const;
+    void print();
     void sort_by_grade_book();
     void sort_by_PESEL();
     void sort_by_surname();
@@ -36,13 +36,13 @@ public:
 private:
 
     std::vector<std::shared_ptr<Human>> people;
-    //tutaj czy w klasie Human?
-    std::vector<std::string> rand_name{ "Julia", "Zofia", "Antoni", "Jakub" };
-    std::vector<std::string> rand_surname{ "Kowalczyk", "Wozniak", "Mazur", "Krawczyk" };
-    std::vector<std::string> rand_PESEL{ "99011012443", "99011012542", "99011012641", "99011012740" };
-    std::vector<std::string> rand_sex{ "mezczyzna", "kobieta" };
-    std::vector<std::string> rand_address{ "Szczecin", "Bialystok", "Warszawa", "Poznan" };
-    std::vector<std::string> rand_no_of_grade_book{ "111", "222", "333", "444" }; //w klasie Student?
-    std::vector<double> rand_salary{ 10, 15, 20, 25 }; //w klasie Employee?
+    std::vector<std::string> rand_male_name;
+    std::vector<std::string> rand_female_name;
+    std::vector<std::string> rand_surname;
+    std::vector<std::string> rand_PESEL;
+    std::vector<std::string> rand_sex;
+    std::vector<std::string> rand_address;
+    std::vector<std::string> rand_no_of_grade_book;
+    std::vector<double> rand_salary;
 };
 

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <stdexcept>
+#include <numeric>
 
 class Human
 {
@@ -17,7 +18,7 @@ public:
     virtual std::string get_no_of_grade_book() const = 0;
     virtual double get_salary() const = 0;
     virtual void set_salary(double new_salary) = 0;
-    virtual std::string print() const;
+    virtual std::string print();
     bool correct_PESEL(std::string new_PESEL) const;
     std::string get_name() const;
     std::string get_surname() const;

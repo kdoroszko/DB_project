@@ -14,38 +14,16 @@ int main()
     {
         DB database;
 
-        std::shared_ptr<Human> ptr_A;
-        std::shared_ptr<Human> ptr_V;
-        std::shared_ptr<Human> ptr_B;
-        std::shared_ptr<Human> ptr_W;
-        std::shared_ptr<Human> ptr_C;
-        std::shared_ptr<Human> ptr_X;
-        std::shared_ptr<Human> ptr_D;
-        std::shared_ptr<Human> ptr_Y;
-        std::shared_ptr<Human> ptr_E;
-        std::shared_ptr<Human> ptr_Z;
-
-        ptr_A.reset(new Student("Adam", "Adamowski", "99011012344", "mezczyzna", "Wroclaw", "123"));
-        ptr_V.reset(new Employee("Wiktoria", "Kowalska", "78060614585", "kobieta", "Brzeg", 1500));
-        ptr_B.reset(new Student("Bartosz", "Byk", "94041712587", "mezczyzna", "Opole", "456"));
-        ptr_W.reset(new Employee("Wanda", "Wol", "56082917785", "kobieta", "Dlugoleka", 2500));
-        ptr_C.reset(new Student("Celina", "Czajka", "97100812455", "kobieta", "Sroda Slaska", "789"));
-        ptr_X.reset(new Employee("Anna", "Nowak", "88021412842", "kobieta", "Jelenia Gora", 3500));
-        ptr_D.reset(new Student("Dariusz", "Drewniak", "91051923349", "mezczyzna", "Olawa", "249"));
-        ptr_Y.reset(new Employee("Zuzanna", "Zegar", "76022812310", "kobieta", "Czestochowa", 4500));
-        ptr_E.reset(new Student("Emil", "Ekierka", "99032462379", "mezczyzna", "Wroclaw", "536"));
-        ptr_Z.reset(new Employee("Zbigniew", "Zabek", "49120112440", "mezczyzna", "Wroclaw", 1000));
-
-        database.add_to_base(ptr_A);
-        database.add_to_base(ptr_V);
-        database.add_to_base(ptr_B);
-        database.add_to_base(ptr_W);
-        database.add_to_base(ptr_C);
-        database.add_to_base(ptr_X);
-        database.add_to_base(ptr_D);
-        database.add_to_base(ptr_Y);
-        database.add_to_base(ptr_E);
-        database.add_to_base(ptr_Z);
+        database.add_to_base(std::make_shared<Student>("Adam", "Adamowski", "99011012344", "mezczyzna", "Wroclaw", "123"));
+        database.add_to_base(std::make_shared<Employee>("Wiktoria", "Kowalska", "78060614585", "kobieta", "Brzeg", 1500));
+        database.add_to_base(std::make_shared<Student>("Bartosz", "Byk", "94041712587", "mezczyzna", "Opole", "456"));
+        database.add_to_base(std::make_shared<Employee>("Wanda", "Wol", "56082917785", "kobieta", "Dlugoleka", 2500));
+        database.add_to_base(std::make_shared<Student>("Celina", "Czajka", "97100812455", "kobieta", "Sroda Slaska", "789"));
+        database.add_to_base(std::make_shared<Employee>("Anna", "Nowak", "88021412842", "kobieta", "Jelenia Gora", 3500));
+        database.add_to_base(std::make_shared<Student>("Dariusz", "Drewniak", "91051923349", "mezczyzna", "Olawa", "249"));
+        database.add_to_base(std::make_shared<Employee>("Zuzanna", "Zegar", "76022812310", "kobieta", "Czestochowa", 4500));
+        database.add_to_base(std::make_shared<Student>("Emil", "Ekierka", "99032462379", "mezczyzna", "Wroclaw", "536"));
+        database.add_to_base(std::make_shared<Employee>("Zbigniew", "Zabek", "49120112440", "mezczyzna", "Wroclaw", 1000));
 
         database.delete_student_from_base("789");
         database.delete_student_from_base("789111");

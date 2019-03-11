@@ -34,11 +34,7 @@ void DB::find_by_surname(std::string find_surname)
     for (auto element : people)
     {
         if (element->get_surname() == find_surname)
-        {
-            //element->print(); // nie dziala :/
-            //element->Human::print(); // nie dziala :/
-            std::cout << element->get_name() << " " << element->get_surname() << " o nr PESEL: " << element->get_PESEL() << '\n';
-        }
+            std::cout << element->print() << '\n';
     }
 }
 
@@ -50,7 +46,7 @@ std::vector<std::shared_ptr<Human>>::iterator DB::find_by_PESEL(std::string PESE
     });
 }
 
-void DB::print() const
+void DB::print()
 {
     std::for_each(people.begin(), people.end(), [](std::shared_ptr<Human> human) {std::cout << human->print() << '\n'; });
 }
@@ -155,16 +151,8 @@ void DB::load(std::string file_name)
             convert >> temp_salary;
 
             if (static_cast<int>(temp_salary) == 0)
-            {
-                std::shared_ptr<Human> temp_ptr;
-                temp_ptr.reset(new Student(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_no_of_grade_book));
-                people.emplace_back(temp_ptr);
-            }
-            else {
-                std::shared_ptr<Human> temp_ptr;
-                temp_ptr.reset(new Employee(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_salary));
-                people.emplace_back(temp_ptr);
-            }
+                people.emplace_back(std::make_shared<Student>(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_no_of_grade_book));
+            else people.emplace_back(std::make_shared<Employee>(temp_name, temp_surname, temp_PESEL, temp_sex, temp_address, temp_salary));
         }
 
         if (line_no == 7)
@@ -178,23 +166,38 @@ void DB::generate_data()
     std::string seed_random = std::to_string(time(nullptr));
     std::random_device rd(seed_random);
     std::mt19937 g(rd());
-    std::shuffle(rand_name.begin(), rand_name.end(), g);
     std::shuffle(rand_surname.begin(), rand_surname.end(), g);
     std::shuffle(rand_PESEL.begin(), rand_PESEL.end(), g);
-    std::shuffle(rand_sex.begin(), rand_sex.end(), g); //trzeba by zrobic rozroznienie imion ze wzgledu na plec, no chyba ze Mariusz moze byc kobieta ;)
+    std::shuffle(rand_sex.begin(), rand_sex.end(), g);
     std::shuffle(rand_address.begin(), rand_address.end(), g);
 
+    std::string rand_name;
     if (*rand_sex.begin() == "kobieta")
     {
+        std::shuffle(rand_female_name.begin(), rand_female_name.end(), g);
+        rand_name = *rand_female_name.begin();
+    }
+    else {
+        std::shuffle(rand_male_name.begin(), rand_male_name.end(), g);
+        rand_name = *rand_male_name.begin();
+    }
+
+    if (rd() % 2 == 0)
+    {
         std::shuffle(rand_no_of_grade_book.begin(), rand_no_of_grade_book.end(), g);
-        std::shared_ptr<Human> rand_ptr;
-        rand_ptr.reset(new Student(*rand_name.begin(), *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_no_of_grade_book.begin()));
-        people.emplace_back(rand_ptr);
+        people.emplace_back(std::make_shared<Student>(rand_name, *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_no_of_grade_book.begin()));
     }
     else {
         std::shuffle(rand_salary.begin(), rand_salary.end(), g);
-        std::shared_ptr<Human> rand_ptr;
-        rand_ptr.reset(new Employee(*rand_name.begin(), *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_salary.begin()));
-        people.emplace_back(rand_ptr);
+        people.emplace_back(std::make_shared<Employee>(rand_name, *rand_surname.begin(), *rand_PESEL.begin(), *rand_sex.begin(), *rand_address.begin(), *rand_salary.begin()));
     }
 }
+
+std::vector<std::string> DB::rand_male_name{ "Jakub", "Antoni", "Jakub" };
+std::vector<std::string> DB::rand_female_name{ "Julia", "Zofia", "Anastazja" };
+std::vector<std::string> DB::rand_surname{ "Kowalczyk", "Wozniak", "Mazur", "Krawczyk" };
+std::vector<std::string> DB::rand_PESEL{ "99011012443", "99011012542", "99011012641", "99011012740" };
+std::vector<std::string> DB::rand_sex{ "mezczyzna", "kobieta" };
+std::vector<std::string> DB::rand_address{ "Szczecin", "Bialystok", "Warszawa", "Poznan" };
+std::vector<std::string> DB::rand_no_of_grade_book{ "111", "222", "333", "444" };
+std::vector<double> DB::rand_salary{ 10, 15, 20, 25 };

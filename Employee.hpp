@@ -15,7 +15,7 @@ public:
 
     double get_salary() const;
     void set_salary(double new_salary);
-    std::string print() const;
+    std::string print();
     virtual std::string get_no_of_grade_book() const;
 
 private:
