@@ -36,13 +36,12 @@ public:
 private:
 
     std::vector<std::shared_ptr<Human>> people;
-    std::vector<std::string> rand_male_name;
-    std::vector<std::string> rand_female_name;
-    std::vector<std::string> rand_surname;
-    std::vector<std::string> rand_PESEL;
-    std::vector<std::string> rand_sex;
-    std::vector<std::string> rand_address;
-    std::vector<std::string> rand_no_of_grade_book;
-    std::vector<double> rand_salary;
+    static std::vector<std::string> rand_male_name;
+    static std::vector<std::string> rand_female_name;
+    static std::vector<std::string> rand_surname;
+    static std::vector<std::string> rand_PESEL;
+    static std::vector<std::string> rand_sex;
+    static std::vector<std::string> rand_address;
+    static std::vector<std::string> rand_no_of_grade_book;
+    static std::vector<double> rand_salary;
 };
-
