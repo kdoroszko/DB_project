@@ -1,7 +1,7 @@
 # DB_project
-Academic database project w/o menu
+Zadanie z kursu C++/STL (Coders School/Wrocław/luty 2019)
 
-Projekt akademickiej bazy danych - projekt zaliczeniowy kursu C++/STL
+Projekt akademickiej bazy danych bez interfejsu dla użytkownika. Studenci i pracownicy celowo są trzymani w jednym kontenerze(vector), aby pokazać wynikające z tego problemy.
 
 Napisz program, który będzie akademicką "bazą danych". Wymagania do 09.02.2019:
 
