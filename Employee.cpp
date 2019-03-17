@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Employee.hpp"
 
 double Employee::get_salary() const

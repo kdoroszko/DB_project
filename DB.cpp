@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "DB.hpp"
 
 void DB::add_to_base(std::shared_ptr<Human> new_human)

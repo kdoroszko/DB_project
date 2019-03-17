@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Student.hpp"
 
 std::string Student::print()

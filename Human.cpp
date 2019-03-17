@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Human.hpp"
 
 Human::Human(std::string new_name, std::string new_surname, std::string new_PESEL, std::string new_sex, std::string new_address)
